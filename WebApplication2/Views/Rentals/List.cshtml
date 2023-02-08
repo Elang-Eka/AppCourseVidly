@@ -1,0 +1,79 @@
+﻿@model IEnumerable<WebApplication2.Models.Rental>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Rentals</h2>
+@Html.ActionLink("Add Rental", "Create", "Rentals", new { @class = "btn btn-primary mt-2 mb-4", @type = "button" })
+
+<table id="rentals" class="table table-bordered table-hover">
+    <thead>
+        <tr class="table-primary">
+            <th scope="col">Details</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Movie Name</th>
+            <th scope="col">Genre Of Movie Name</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var table = $("#rentals").DataTable({
+                ajax: {
+                    url: "/api/rentals",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<a href='/rentals/details/" + data + "' class='btn btn-warning btn-sm'>View Detail</a>";
+                        }
+                    },
+                    {
+                        data: "customer.name"
+                    },
+                    {
+                        data: "movie.name"
+                    },
+                    {
+                        data: "movie.genre.name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn btn-danger btn-sm js-delete' data-rental-id=" + data + ">Delete</button>";
+                        }
+                    },
+                ]
+            });
+
+            $("#rentals").on("click", ".js-delete", function () {
+                var button = $(this);
+
+                bootbox.confirm("Are you sure you want to delete this rental data?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/rentals/" + button.attr("data-rental-id"),
+                            method: "DELETE",
+                            dataType: "json",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,15 @@
+﻿@model WebApplication2.Models.Rental
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details Rented</h2>
+<ul>
+    <li>@Html.LabelFor(Model => Model.Customer.Name): @Html.DisplayFor(Model => Model.Customer.Name)</li>
+    <li>@Html.LabelFor(Model => Model.Movie.Name): @Html.DisplayFor(Model => Model.Movie.Name)</li>
+    <li>@Html.LabelFor(Model => Model.DateRented): @Html.DisplayFor(Model => Model.DateRented)</li>
+    <li>@Html.LabelFor(Model => Model.DateReturned): @Html.DisplayFor(Model => Model.DateReturned)</li>
+</ul>
+    @Html.ActionLink("Edit", "Edit", "Rentals", new { id = Model.Id }, null)

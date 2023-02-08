@@ -1,0 +1,16 @@
+﻿@model WebApplication2.Models.Movie
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Html.DisplayFor(Model => Model.Name)</h2>
+<ul>
+    <li>Genre: @Html.DisplayFor(Model => Model.Genre.Name)</li>
+    <li>@Html.DisplayNameFor(Model => Model.ReleaseDate): @Html.DisplayFor(Model => Model.ReleaseDate)</li>
+    <li>@Html.DisplayNameFor(Model => Model.DateAdded): @Html.DisplayFor(Model => Model.DateAdded)</li>
+    <li>@Html.DisplayNameFor(Model => Model.NumberInStock): @Html.DisplayFor(Model => Model.NumberInStock)</li>
+</ul>
+@Html.ActionLink("Edit", "Edit", "Movies", new { id = Model.Id }, null)
+
+
